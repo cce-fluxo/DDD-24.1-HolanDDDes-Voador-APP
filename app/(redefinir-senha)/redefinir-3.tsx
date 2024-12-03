@@ -67,7 +67,7 @@ const Redefinir3: React.FC = () => {
       {/* Componentes de baixo */}
     <View className="ml-10 mr-10 justify-center">
     
-    <Text className="font-poppins font-semibold text-preto text-4xl mb-2 justify-center items-center ml-8">Nova Senha</Text>
+    <Text className="font-PoppinsSemiBold font-semibold text-preto text-4xl mb-2 justify-center items-center ml-8">Nova Senha</Text>
       
     <View className="px-6 py-4 w-full justify-center items-center">
   
@@ -154,7 +154,7 @@ const Redefinir3: React.FC = () => {
               colorBotao="bg-rosa-4"
               colorTexto="text-branco-total"
               onPress={handleSubmit}
-              fonteTexto="font-poppins"
+              fonteTexto="font-PoppinsSemiBold"
             />
           </View>
         </>

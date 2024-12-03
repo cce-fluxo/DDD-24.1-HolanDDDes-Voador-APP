@@ -69,7 +69,7 @@ const Redefinir1: React.FC = () => {
 
       {/* Componentes de baixo */}
   <View className="ml-10 mr-10 justify-center">
-    <Text className="font-poppins font-semibold text-preto text-4xl mb-2 justify-center items-center ml-8">Digite seu email</Text>
+    <Text className="font-PoppinsSemiBold font-semibold text-preto text-4xl mb-2 justify-center items-center ml-8">Digite seu email</Text>
       
     <View className="px-6 py-4 w-full justify-center items-center">
   
@@ -108,7 +108,7 @@ const Redefinir1: React.FC = () => {
               colorBotao="bg-rosa-4"
               colorTexto="text-branco-total"
               onPress={handleSubmit}
-              fonteTexto="font-poppins"
+              fonteTexto="font-PoppinsSemiBold"
             />
           </View>
         </>
@@ -121,7 +121,7 @@ const Redefinir1: React.FC = () => {
       onPress={handlePress}
       style={styles.button}
     >
-      <Text className={`font-poppins text-lg justify-center text-center text-laranja`}>Voltar</Text>
+      <Text className={`font-PoppinsSemiBold text-lg justify-center text-center text-laranja`}>Voltar</Text>
     </Pressable>
   </View> 
 

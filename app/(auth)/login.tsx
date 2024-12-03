@@ -69,7 +69,7 @@ const Login: React.FC = () => {
           </View>
 
           <View style={{ marginTop: 240 }} >
-            <Text className="ml-10 font-poppins font-semibold text-preto text-4xl">Login</Text>
+            <Text className="ml-10 font-PoppinsSemiBold font-semibold text-preto text-4xl">Login</Text>
           </View>
 
 
@@ -144,7 +144,7 @@ const Login: React.FC = () => {
           )}
 
           {/* Redefinição e lembrar conta */}
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               {/* Checkbox customizado */}
               <TouchableOpacity onPress={() => setIsChecked(!isChecked)} style={{ marginRight: 8 }}>
@@ -185,7 +185,7 @@ const Login: React.FC = () => {
               colorBotao="bg-rosa-4"
               colorTexto="text-branco-total"
               onPress={handleSubmit}
-              fonteTexto="font-poppins"
+              fonteTexto="font-PoppinsSemiBold"
             />
           </View>
         </>
@@ -198,11 +198,11 @@ const Login: React.FC = () => {
       onPress={handlePress}
       style={styles.button}
     >
-      <Text className={`font-poppins text-lg justify-center text-center text-laranja`}>Cadastre-se</Text>
+      <Text className={`font-PoppinsSemiBold text-lg justify-center text-center text-laranja`}>Cadastre-se</Text>
     </Pressable>
   </View> 
 
-  <Text className="text-laranja justify-center text-center">ou</Text>
+  <Text className="text-laranja justify-center text-center font-PoppinsRegular">ou</Text>
 
     </View>
 

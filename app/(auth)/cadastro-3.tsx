@@ -67,7 +67,7 @@ const Cadastro3: React.FC = () => {
       {/* Componentes de baixo */}
   <View className="ml-10 mr-10 justify-center items-center text-center">
     {/* Botão "Cadastrar-se" */}
-    <Text className="font-poppins font-semibold text-preto text-4xl mb-2 text-center justify-center items-center">Crie a sua conta</Text>
+    <Text className="font-PoppinsSemiBold font-semibold text-preto text-4xl mb-2 text-center justify-center items-center">Crie a sua conta</Text>
       
     <View className="px-6 py-4 w-full">
   
@@ -154,7 +154,7 @@ const Cadastro3: React.FC = () => {
               colorBotao="bg-rosa-4"
               colorTexto="text-branco-total"
               onPress={handleSubmit}
-              fonteTexto="font-poppins"
+              fonteTexto="font-PoppinsSemiBold"
             />
           </View>
         </>
