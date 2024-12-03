@@ -1,6 +1,11 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
+    "jsx": "react-native", // Configura o JSX para projetos React Native
+    "target": "esnext", // Especifica o alvo do JavaScript moderno
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
     "strict": true,
     "paths": {
       "@/*": [
