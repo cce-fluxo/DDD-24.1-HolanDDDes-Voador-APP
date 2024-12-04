@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { Svg, Defs, LinearGradient, Image, Stop, Path } from 'react-native-svg';
 import * as Yup from "yup";
 import { Formik } from "formik";
@@ -20,6 +20,12 @@ const Redefinir3: React.FC = () => {
   const [confirmarSenhaVisible, setConfirmarSenhaVisible] = useState(false);
   
   return (
+    <KeyboardAvoidingView
+    style={{ flex: 1 }}
+    behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+  >
+  <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+
     <View className="flex">
       {/* Degradê no topo com corte ondulado */}
       <View className="relative w-auto">
@@ -166,6 +172,8 @@ const Redefinir3: React.FC = () => {
     </View>
 
   </View>
+  </ScrollView>
+  </KeyboardAvoidingView>
   );
 };
 

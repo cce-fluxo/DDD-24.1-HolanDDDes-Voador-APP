@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, TextInput } from 'react-native';
+import { View, StyleSheet, Text, TextInput, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import { Svg, Defs, LinearGradient, Image, Stop, Path } from 'react-native-svg';
 import * as Yup from "yup";
 import { Formik } from "formik";
@@ -26,6 +26,12 @@ const validationSchema = Yup.object().shape({
 
 const Cadastro1: React.FC = () => {
   return (
+    <KeyboardAvoidingView
+    style={{ flex: 1 }}
+    behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+  >
+  <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+
     <View className="flex">
       {/* Degradê no topo com corte ondulado */}
       <View className="relative w-auto">
@@ -163,6 +169,8 @@ const Cadastro1: React.FC = () => {
     </View>
 
   </View>
+  </ScrollView>
+  </KeyboardAvoidingView>
   );
 };
 

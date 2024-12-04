@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
 import { Svg, Defs, LinearGradient, Image, Stop, Path } from 'react-native-svg';
 import * as Yup from "yup";
 import { Formik } from "formik";
 import { Dimensions } from 'react-native';
 import Button from '@/components/botao';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const { width } = Dimensions.get('window');
 
@@ -20,6 +21,12 @@ const Cadastro3: React.FC = () => {
   const [confirmarSenhaVisible, setConfirmarSenhaVisible] = useState(false);
   
   return (
+    <KeyboardAvoidingView
+    style={{ flex: 1 }}
+    behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+  >
+  <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+
     <View className="flex">
       {/* Degradê no topo com corte ondulado */}
       <View className="relative w-auto">
@@ -166,6 +173,8 @@ const Cadastro3: React.FC = () => {
     </View>
 
   </View>
+  </ScrollView>
+  </KeyboardAvoidingView>
   );
 };
 

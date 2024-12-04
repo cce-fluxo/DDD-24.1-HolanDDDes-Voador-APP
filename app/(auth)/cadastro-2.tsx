@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, StyleSheet, Text, TextInput } from 'react-native';
+import { View, StyleSheet, Text, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
 import { Svg, Defs, LinearGradient, Image, Stop, Path } from 'react-native-svg';
 import * as Yup from "yup";
 import { Formik } from "formik";
 import { Dimensions } from 'react-native';
 import Button from '@/components/botao';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const { width } = Dimensions.get('window');
 
@@ -19,6 +20,12 @@ const validationSchema = Yup.object().shape({
 
 const Cadastro2: React.FC = () => {
   return (
+  <KeyboardAvoidingView
+    style={{ flex: 1 }}
+    behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+  >
+  <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+
     <View className="flex">
       {/* Degradê no topo com corte ondulado */}
       <View className="relative w-auto">
@@ -135,6 +142,8 @@ const Cadastro2: React.FC = () => {
     </View>
 
   </View>
+  </ScrollView>
+  </KeyboardAvoidingView>
   );
 };
 
