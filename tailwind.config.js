@@ -20,7 +20,8 @@ module.exports = {
         "cinza-2": "#AB9C9F",
         "cinza-3": "#574A4D",
         "cinza-4": "#372F30",
-        "laranja": "#FF6F45",
+        "cinza-6": "#F2F2F2",
+        laranja: "#FF6F45",
         "laranja-1": "#FD765E",
       },
       fontFamily: {
