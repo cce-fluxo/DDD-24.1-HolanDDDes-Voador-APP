@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, TextInput, TouchableOpacity, Pressable } from 'react-native';
+import { View, StyleSheet, Text, TextInput, TouchableOpacity, Pressable, Alert, Platform, KeyboardAvoidingView, ScrollView, Keyboard } from 'react-native';
 import { Svg, Defs, LinearGradient, Image, Stop, Path, Rect, ClipPath, G } from 'react-native-svg';
 import * as Yup from "yup";
 import { Formik } from "formik";
 import { Dimensions } from 'react-native';
 import Button from '@/components/botao';
 import { Link, useRouter } from 'expo-router';
+import { useAuth } from "@/context/authContext";
+import api from '@/services/axios';
 
 const { width } = Dimensions.get('window');
 
@@ -18,16 +20,47 @@ const validationSchema = Yup.object().shape({
 
 const Login: React.FC = () => {
   const [isChecked, setIsChecked] = useState(false);
+  const [carregandoLogin, setCarregandoLogin] = useState(false);
+  const { signIn, token, saveUserInfo } = useAuth();
+
+  async function logar(data: any) {
+    setCarregandoLogin(true);
+    try {
+      // requisição do login
+      const response = await api.post('auth/login', data)
+      console.log(response.data);
+      await signIn(response.data.access_token);
+      setCarregandoLogin(false);
+      console.log(token);
+      router.push('/(auth)/cadastro-1')
+
+      // salvando as informações do usuário
+      await saveUserInfo(response.data.user);
+    } catch (error) {
+      setCarregandoLogin(false);
+      console.log("Erro ao realizar login: ", error);
+    }
+  };
 
   const router = useRouter();
 
   const handlePress = () => {
-    router.push('/(auth)/cadastro-1'); // Navega para a rota desejada
+    try {
+      router.push('/(auth)/cadastro-1'); // Navega para a rota desejada
+    } catch {
+      Alert.alert('Não foi possível acessar esta rota')
+    }
   };
 
   const [senhaVisible, setSenhaVisible] = useState(false);
   
   return (
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    >
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+
     <View className="flex">
       {/* Degradê no topo com corte ondulado */}
       <View className="relative w-auto">
@@ -69,14 +102,15 @@ const Login: React.FC = () => {
           </View>
 
           <View style={{ marginTop: 200 }} >
-            <Text className="ml-10 font-PoppinsSemiBold font-semibold text-preto text-4xl">Login</Text>
+            <Text className="ml-10 font-poppins font-semibold text-preto text-4xl">Login</Text>
           </View>
 
 
         </Svg>
       </View>
 
-  <View className="ml-10 mr-10 mt-[-60px]">
+      {/* Componentes de baixo */}
+  <View className="ml-10 mr-10 mt-[-40px]">
     {/* Botão "Cadastrar-se" */}
   
     <View className="px-6 py-4 w-full">
@@ -84,7 +118,7 @@ const Login: React.FC = () => {
     <Formik
       initialValues={{ email: '', senha: ''}}
       onSubmit={(values) => {
-        console.log(values);
+        logar(values)
       }}
       validationSchema={validationSchema}
     >
@@ -230,6 +264,8 @@ const Login: React.FC = () => {
   </View>
 
   </View>
+  </ScrollView>
+  </KeyboardAvoidingView>
   );
 };
 

@@ -1,31 +1,78 @@
-import React from 'react';
-import { View, StyleSheet, Text, TextInput } from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet, Text, TextInput, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import { Svg, Defs, LinearGradient, Image, Stop, Path } from 'react-native-svg';
 import * as Yup from "yup";
 import { Formik } from "formik";
 import { Dimensions } from 'react-native';
 import Button from '@/components/botao';
+import { router, useRouter } from 'expo-router';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { width } = Dimensions.get('window');
 
+// Normalizando a data para ter sempre 00:00:00
+const normalizeDate = (date: any) => {
+  const normalizedDate = new Date(date);
+  normalizedDate.setHours(0, 0, 0, 0); // Define hora, minuto, segundo e milissegundo como 00:00:00
+  return normalizedDate;
+};
+
 const validationSchema = Yup.object().shape({
-  name: Yup.string()
+  nome: Yup.string()
     .min(2, 'O nome deve ter pelo menos 2 caracteres.')
     .required('O nome é obrigatório'),
   sobrenome: Yup.string()
     .min(2, 'O nome deve ter pelo menos 2 caracteres.')
     .required('O sobrenome é obrigatório'),
-  nascimento: Yup.date()
-    .required("Campo obrigatorio")
-    .min(
-      new Date(1900, 0, 1),
-      "Nao é permitido datas anteriores a 1900"
-    )
-    .max(new Date(), "Nao é permitido data futura"),
+  dataNascimento: Yup.date()
+  .required('Campo obrigatório')
+  .min(new Date(1900, 0, 1), 'Não é permitido datas anteriores a 1900')
+  .max(new Date(), 'Não é permitido data futura'),
 });
 
 const Cadastro1: React.FC = () => {
+  const router = useRouter();
+
+  const [isDatePickerVisible, setDatePickerVisible] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
+  const handleConfirm = (event: any, date: Date | undefined, setFieldValue: any) => {
+    if (event.type === 'set' && date) {
+      setSelectedDate(date);
+      setFieldValue('dataNascimento', date.toISOString()); // Atualiza o campo no Formik
+    }
+    setDatePickerVisible(false);
+  };
+  
+
+   // Função para salvar os dados no AsyncStorage
+   const saveData = async (values: { nome: string; sobrenome: string; dataNascimento: string }) => {
+    try {
+      const formData = {
+        nome: values.nome,
+        sobrenome: values.sobrenome,
+        data_nascimento: normalizeDate(values.dataNascimento),
+      };
+
+      await AsyncStorage.setItem('@userNome', values.nome);
+      await AsyncStorage.setItem('@userSobrenome', values.sobrenome);
+      await AsyncStorage.setItem('@userNascimento', values.dataNascimento );
+      console.log('Dados salvos com sucesso:', formData);
+
+      // Redireciona para a próxima página
+      router.push('/(auth)/cadastro-2');
+    } catch (error) {
+      console.error('Erro ao salvar dados:', error);
+    }
+  };
   return (
+    <KeyboardAvoidingView
+    style={{ flex: 1 }}
+    behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+  >
+  <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+
     <View className="flex">
       {/* Degradê no topo com corte ondulado */}
       <View className="relative w-auto">
@@ -79,13 +126,13 @@ const Cadastro1: React.FC = () => {
     <View className="px-6 py-4 w-full">
   
     <Formik
-      initialValues={{ name: '', sobrenome: '' , nascimento: ''}}
+      initialValues={{ nome: '', sobrenome: '' , dataNascimento: ''}}
       onSubmit={(values) => {
-        console.log(values);
+        saveData(values);
       }}
       validationSchema={validationSchema}
     >
-      {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
+      {({ handleChange, handleBlur, handleSubmit, values, errors, touched, setFieldValue  }) => (
         <>
           {/* Campo Nome */}
           <View style={styles.inputWrapper}>
@@ -97,14 +144,14 @@ const Cadastro1: React.FC = () => {
             </Svg>
             <TextInput
               placeholder="Nome"
-              onChangeText={handleChange('name')}
-              onBlur={handleBlur('name')}
-              value={values.name}
+              onChangeText={handleChange('nome')}
+              onBlur={handleBlur('nome')}
+              value={values.nome}
               style={styles.textInput}
             />
           </View>
-          {touched.name && errors.name && (
-            <Text style={styles.error}>{errors.name}</Text>
+          {touched.nome && errors.nome && (
+            <Text style={styles.error}>{errors.nome}</Text>
           )}
 
           {/* Campo sobrenome */}
@@ -135,14 +182,27 @@ const Cadastro1: React.FC = () => {
 
             <TextInput
               placeholder="Data de nascimento (dd/mm/aa)"
-              onChangeText={handleChange('nascimento')}
-              onBlur={handleBlur('nascimento')}
-              value={values.nascimento}
+              onFocus={() => setDatePickerVisible(true)} // Ao clicar no campo, abrir o calendário
+              onBlur={handleBlur('dataNascimento')}
+              value={selectedDate ? selectedDate.toLocaleDateString('pt-BR') : ''}
               style={styles.textInput}
             />
           </View>
-          {touched.nascimento && errors.nascimento && (
-            <Text style={styles.error}>{errors.nascimento}</Text>
+          {touched.dataNascimento && errors.dataNascimento && (
+            <Text style={styles.error}>{errors.dataNascimento}</Text>
+          )}
+          {/* Exibindo o DateTimePicker quando o campo é focado */}
+          {isDatePickerVisible && (
+            <DateTimePicker
+              testID="dateTimePicker"
+              value={selectedDate}
+              mode="date"
+              display="default"
+              onChange={(event, date) => handleConfirm(event, date, setFieldValue)}
+              is24Hour={true}
+              minimumDate={new Date(1900, 0, 1)} // Data mínima
+              maximumDate={new Date()} // Data máxima (não futura)
+            />
           )}
 
           {/* Botão */}
@@ -165,6 +225,8 @@ const Cadastro1: React.FC = () => {
     </View>
 
   </View>
+  </ScrollView>
+  </KeyboardAvoidingView>
   );
 };
 
