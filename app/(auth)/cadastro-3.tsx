@@ -6,6 +6,9 @@ import { Formik } from "formik";
 import { Dimensions } from 'react-native';
 import Button from '@/components/botao';
 import { ScrollView } from 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import api from '@/services/axios';
+import { router } from 'expo-router';
 
 const { width } = Dimensions.get('window');
 
@@ -20,6 +23,57 @@ const Cadastro3: React.FC = () => {
   const [senhaVisible, setSenhaVisible] = useState(false);
   const [confirmarSenhaVisible, setConfirmarSenhaVisible] = useState(false);
   
+  // Função para enviar os dados pro back
+  const saveData = async (values: { senha: string; }) => {
+    try {
+      const formData = {
+        hash_senha: values.senha
+      }
+
+      // Salva os dados no AsyncStorage
+      const allKeys = await AsyncStorage.getAllKeys();
+      console.log('Chaves armazenadas no AsyncStorage:', allKeys);
+
+
+      await AsyncStorage.setItem('@userData', JSON.stringify(formData));
+      console.log('Dados salvos com sucesso:', formData);
+
+      // Recuperar dados do AsyncStorage
+      const storedEmail = await AsyncStorage.getItem('@userEmail');
+      const storedNascimento = await AsyncStorage.getItem('@userNascimento');
+      const storedNome = await AsyncStorage.getItem('@userNome');
+      const storedSobrenome = await AsyncStorage.getItem('@userSobrenome');
+      const storedTelefone = await AsyncStorage.getItem('@userTelefone');
+
+      // Criar o objeto final com informações adicionais
+      const userInfo = {
+        nome: storedNome,
+        sobrenome: storedSobrenome,
+        data_nascimento: storedNascimento,
+        telefone: storedTelefone,
+        email: storedEmail,
+        hash_senha: values.senha,
+        role: 'cliente',
+        vip: false,
+      };
+
+      console.log(userInfo)
+
+      const response = await api.post('usuario', userInfo);
+      if (response.status >= 200 && response.status < 300) {
+        const responseData = await response.data;
+        console.log('Dados enviados para a API com sucesso:', responseData);
+        router.push('/(auth)/login');
+      } else {
+        console.error('Erro ao enviar dados para a API:', response.statusText);
+        console.error('Detalhes do erro:', response.data); // Aqui você pode verificar a resposta do erro, se houver.
+      }
+
+    } catch (error) {
+        console.error('Erro ao salvar ou enviar dados:', error);
+    }
+  };
+
   return (
     <KeyboardAvoidingView
     style={{ flex: 1 }}
@@ -81,7 +135,7 @@ const Cadastro3: React.FC = () => {
     <Formik
       initialValues={{ senha: '', confirmarSenha: ''}}
       onSubmit={(values) => {
-        console.log(values);
+        saveData(values)
       }}
       validationSchema={validationSchema}
     >
@@ -160,7 +214,7 @@ const Cadastro3: React.FC = () => {
               text="Continuar"
               colorBotao="bg-rosa-4"
               colorTexto="text-branco-total"
-              onPress={handleSubmit}
+              onPress={() => handleSubmit()}
               fonteTexto="font-poppins"
             />
           </View>

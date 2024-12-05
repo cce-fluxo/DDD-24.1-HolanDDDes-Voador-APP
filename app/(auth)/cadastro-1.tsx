@@ -5,9 +5,9 @@ import * as Yup from "yup";
 import { Formik } from "formik";
 import { Dimensions } from 'react-native';
 import Button from '@/components/botao';
-import { useSignUp } from '@/context/signUpContext';
-import { router } from 'expo-router';
+import { router, useRouter } from 'expo-router';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { width } = Dimensions.get('window');
 
@@ -25,29 +25,47 @@ const validationSchema = Yup.object().shape({
   sobrenome: Yup.string()
     .min(2, 'O nome deve ter pelo menos 2 caracteres.')
     .required('O sobrenome é obrigatório'),
-  nascimento: Yup.date()
+  dataNascimento: Yup.date()
   .required('Campo obrigatório')
   .min(new Date(1900, 0, 1), 'Não é permitido datas anteriores a 1900')
   .max(new Date(), 'Não é permitido data futura'),
 });
 
 const Cadastro1: React.FC = () => {
-  const { user,  updateUser } = useSignUp();
+  const router = useRouter();
 
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
-  const handleConfirm = (event: any, selectedDate: any) => {
-    if (event.type === 'set') {
-      setDatePickerVisible(false); // Fecha o DateTimePicker quando a data for escolhida
-      if (selectedDate) {
-        setSelectedDate(selectedDate); // Atualiza a data selecionada
-      }
-    } else {
-      setDatePickerVisible(false); // Fecha o DateTimePicker caso o usuário cancele
+  const handleConfirm = (event: any, date: Date | undefined, setFieldValue: any) => {
+    if (event.type === 'set' && date) {
+      setSelectedDate(date);
+      setFieldValue('dataNascimento', date.toISOString()); // Atualiza o campo no Formik
+    }
+    setDatePickerVisible(false);
+  };
+  
+
+   // Função para salvar os dados no AsyncStorage
+   const saveData = async (values: { nome: string; sobrenome: string; dataNascimento: string }) => {
+    try {
+      const formData = {
+        nome: values.nome,
+        sobrenome: values.sobrenome,
+        data_nascimento: normalizeDate(values.dataNascimento),
+      };
+
+      await AsyncStorage.setItem('@userNome', values.nome);
+      await AsyncStorage.setItem('@userSobrenome', values.sobrenome);
+      await AsyncStorage.setItem('@userNascimento', values.dataNascimento );
+      console.log('Dados salvos com sucesso:', formData);
+
+      // Redireciona para a próxima página
+      router.push('/(auth)/cadastro-2');
+    } catch (error) {
+      console.error('Erro ao salvar dados:', error);
     }
   };
-
   return (
     <KeyboardAvoidingView
     style={{ flex: 1 }}
@@ -106,26 +124,9 @@ const Cadastro1: React.FC = () => {
     <View className="px-6 py-4 w-full">
   
     <Formik
-      initialValues={{ nome: '', sobrenome: '' , nascimento: ''}}
-      onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          const updatedUser = {
-            nome: values.nome,
-            sobrenome: values.sobrenome,
-            dataNascimento: values.nascimento,
-            hash_senha: user.hash_senha,            
-            email: user.email,
-            endereco: user.endereco,
-            cidade: user.cidade,
-            pais: user.pais,
-            celular: user.celular,
-          };
-          console.log("User atualizado:", updatedUser);
-          updateUser(updatedUser);
-           
-          setSubmitting(false);
-          router.push("/cadastro-2");
-        }, 400);
+      initialValues={{ nome: '', sobrenome: '' , dataNascimento: ''}}
+      onSubmit={(values) => {
+        saveData(values);
       }}
       validationSchema={validationSchema}
     >
@@ -180,13 +181,13 @@ const Cadastro1: React.FC = () => {
             <TextInput
               placeholder="Data de nascimento (dd/mm/aa)"
               onFocus={() => setDatePickerVisible(true)} // Ao clicar no campo, abrir o calendário
-              onBlur={handleBlur('nascimento')}
+              onBlur={handleBlur('dataNascimento')}
               value={selectedDate ? selectedDate.toLocaleDateString('pt-BR') : ''}
               style={styles.textInput}
             />
           </View>
-          {touched.nascimento && errors.nascimento && (
-            <Text style={styles.error}>{errors.nascimento}</Text>
+          {touched.dataNascimento && errors.dataNascimento && (
+            <Text style={styles.error}>{errors.dataNascimento}</Text>
           )}
           {/* Exibindo o DateTimePicker quando o campo é focado */}
           {isDatePickerVisible && (
@@ -194,12 +195,9 @@ const Cadastro1: React.FC = () => {
               testID="dateTimePicker"
               value={selectedDate}
               mode="date"
-              is24Hour={true}
               display="default"
-              onChange={(event, selectedDate) => {
-                handleConfirm(event, selectedDate);
-                setFieldValue('nascimento', selectedDate); // Atualiza o valor no Formik
-              }}
+              onChange={(event, date) => handleConfirm(event, date, setFieldValue)}
+              is24Hour={true}
               minimumDate={new Date(1900, 0, 1)} // Data mínima
               maximumDate={new Date()} // Data máxima (não futura)
             />

@@ -6,6 +6,8 @@ import { Formik } from "formik";
 import { Dimensions } from 'react-native';
 import Button from '@/components/botao';
 import { ScrollView } from 'react-native-gesture-handler';
+import { router } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { width } = Dimensions.get('window');
 
@@ -19,6 +21,28 @@ const validationSchema = Yup.object().shape({
 });
 
 const Cadastro2: React.FC = () => {
+  // Função para salvar os dados no AsyncStorage
+  const saveData = async (values: { email: string; telefone: string; }) => {
+    try {
+      console.log('Valores enviados:', values);
+
+      const formData = {
+        email: values.email,
+        telefone: values.telefone
+      };
+
+      await AsyncStorage.setItem('@userEmail', values.email);
+      await AsyncStorage.setItem('@userTelefone', values.telefone);
+      console.log('Dados salvos com sucesso:', formData);
+
+      // Redireciona para a próxima página
+      router.push('/(auth)/cadastro-3');
+    } catch (error) {
+      console.error('Erro ao salvar dados:', error);
+    }
+  };
+
+
   return (
   <KeyboardAvoidingView
     style={{ flex: 1 }}
@@ -80,7 +104,7 @@ const Cadastro2: React.FC = () => {
     <Formik
       initialValues={{ email: '', telefone: ''}}
       onSubmit={(values) => {
-        console.log(values);
+        saveData(values)
       }}
       validationSchema={validationSchema}
     >
@@ -129,7 +153,7 @@ const Cadastro2: React.FC = () => {
               text="Continuar"
               colorBotao="bg-rosa-4"
               colorTexto="text-branco-total"
-              onPress={handleSubmit}
+              onPress={() => handleSubmit()}
               fonteTexto="font-poppins"
             />
           </View>
