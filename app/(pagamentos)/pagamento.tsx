@@ -3,18 +3,6 @@ import ResumoCompra from "@/components/ResumoCompra";
 import { router } from "expo-router";
 import { View, Text, Image } from "react-native";
 
-const handlePixClick = () => {
-  router.navigate("/(pagamentos)/pagamento-pix");
-};
-
-const handleBoletoClick = () => {
-  router.navigate("/(pagamentos)/pagamento-boleto");
-};
-
-const handleCartaoClick = () => {
-  router.navigate("/(pagamentos)/pagamento-cartao");
-};
-
 export default function Pagamento() {
   return (
     <View className="flex-1 items-center">
@@ -34,18 +22,15 @@ export default function Pagamento() {
       <View className="flex">
         <BotaoPagamento
           texto="Pix"
-          onPress={handlePixClick}
-          icon={"@/assets/images/pix.png"}
+          onPress={() => router.push("/(pagamentos)/pagamento-pix")}
         />
         <BotaoPagamento
           texto="Boleto"
-          onPress={handleBoletoClick}
-          icon="@/assets/images/barcode.png"
+          onPress={() => router.push("/(pagamentos)/pagamento-boleto")}
         />
         <BotaoPagamento
           texto="Cartão de crédito/débito"
-          onPress={handleCartaoClick}
-          icon="@/assets/images/mastercard.png"
+          onPress={() => router.push("/(pagamentos)/pagamento-cartao")}
         />
       </View>
     </View>

@@ -3,12 +3,10 @@ import { Text, Pressable, Image } from "react-native";
 interface BotaoPagamentoProps {
   texto: string;
   onPress: () => void;
-  icon: string;
 }
 
 export default function BotaoPagamento({
   texto,
-  icon,
   onPress,
 }: BotaoPagamentoProps) {
   return (
