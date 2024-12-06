@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, Text, TextInput, Pressable, KeyboardAvoidingView, Platform } from 'react-native';
 import { Svg, Defs, LinearGradient, Image, Stop, Path } from 'react-native-svg';
 import * as Yup from "yup";
@@ -7,6 +7,8 @@ import { Dimensions } from 'react-native';
 import Button from '@/components/botao';
 import { useRouter } from 'expo-router';
 import { ScrollView } from 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import api from '@/services/axios';
 
 const { width } = Dimensions.get('window');
 
@@ -22,6 +24,33 @@ const Redefinir1: React.FC = () => {
   const handlePress = () => {
     router.back(); // Navega para a rota anterior
   };
+
+  const [isPostBom, setIsPostBom] = useState(false);
+
+  async function patchEsqueciSenha(data: any) {
+    setLoading(true);
+    try {
+      const response = await api.patch("auth/recuperar-senha", data);
+      console.log("Email de recuperação enviado com sucesso!", response.data);
+      setIsPostBom(true);
+      router.push("/(redefinir-senha)/redefinir-2"); // Redireciona para a próxima etapa após sucesso
+      return response.data;
+    } catch (error) {
+      console.error("Erro ao enviar email de recuperação", error);
+      setIsPostBom(false);
+    } finally {
+      console.log("Envio de email finalizado");
+      setLoading(false);
+    }
+  }
+
+  const [loading, setLoading] = useState(false); // Estado para controlar o carregamento
+
+  const sendForm = async (values: { email: string }) => {
+    AsyncStorage.setItem("@USERemail", values.email);
+    await patchEsqueciSenha(values);
+  };
+
 
   return (
     <KeyboardAvoidingView
@@ -83,7 +112,7 @@ const Redefinir1: React.FC = () => {
     <Formik
       initialValues={{ email: ''}}
       onSubmit={(values) => {
-        console.log(values);
+        sendForm(values)
       }}
       validationSchema={validationSchema}
     >
@@ -111,10 +140,10 @@ const Redefinir1: React.FC = () => {
           <View className="justify-center items-center flex" 
               style={styles.botao}>
             <Button
-              text="Enviar código"
+              text={loading ? "Enviando..." : "Continuar"} // Alteração dinâmica do texto
               colorBotao="bg-rosa-4"
               colorTexto="text-branco-total"
-              onPress={handleSubmit}
+              onPress={() => handleSubmit()}
               fonteTexto="font-PoppinsSemiBold"
             />
           </View>

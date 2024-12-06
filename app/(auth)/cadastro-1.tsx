@@ -36,6 +36,7 @@ const Cadastro1: React.FC = () => {
 
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [loading, setLoading] = useState(false); // Estado para controlar o carregamento
 
   const handleConfirm = (event: any, date: Date | undefined, setFieldValue: any) => {
     if (event.type === 'set' && date) {
@@ -45,9 +46,9 @@ const Cadastro1: React.FC = () => {
     setDatePickerVisible(false);
   };
   
-
    // Função para salvar os dados no AsyncStorage
    const saveData = async (values: { nome: string; sobrenome: string; dataNascimento: string }) => {
+    setLoading(true);
     try {
       const formData = {
         nome: values.nome,
@@ -64,8 +65,11 @@ const Cadastro1: React.FC = () => {
       router.push('/(auth)/cadastro-2');
     } catch (error) {
       console.error('Erro ao salvar dados:', error);
+    } finally {
+      setLoading(false);
     }
   };
+  
   return (
     <KeyboardAvoidingView
     style={{ flex: 1 }}
@@ -209,11 +213,11 @@ const Cadastro1: React.FC = () => {
           <View className="justify-center items-center flex" 
               style={styles.botao}>
             <Button
-              text="Continuar"
+              text={loading ? "Enviando..." : "Continuar"} // Alteração dinâmica do texto
               colorBotao="bg-rosa-4"
               colorTexto="text-branco-total"
-              onPress={handleSubmit}
-              fonteTexto="font-SemiBold"
+              onPress={() => handleSubmit()}
+              fonteTexto="font-PoppinsSemiBold"
             />
           </View>
         </>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, Text, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
 import { Svg, Defs, LinearGradient, Image, Stop, Path } from 'react-native-svg';
 import * as Yup from "yup";
@@ -21,8 +21,12 @@ const validationSchema = Yup.object().shape({
 });
 
 const Cadastro2: React.FC = () => {
+  const [loading, setLoading] = useState(false); // Estado para controlar o carregamento
+
   // Função para salvar os dados no AsyncStorage
   const saveData = async (values: { email: string; telefone: string; }) => {
+    setLoading(true);
+
     try {
       console.log('Valores enviados:', values);
 
@@ -39,6 +43,8 @@ const Cadastro2: React.FC = () => {
       router.push('/(auth)/cadastro-3');
     } catch (error) {
       console.error('Erro ao salvar dados:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -150,11 +156,11 @@ const Cadastro2: React.FC = () => {
           <View className="justify-center items-center flex" 
               style={styles.botao}>
             <Button
-              text="Continuar"
+              text={loading ? "Enviando..." : "Continuar"} // Alteração dinâmica do texto
               colorBotao="bg-rosa-4"
               colorTexto="text-branco-total"
               onPress={() => handleSubmit()}
-              fonteTexto="font-poppins"
+              fonteTexto="font-PoppinsSemiBold"
             />
           </View>
         </>

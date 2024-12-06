@@ -214,10 +214,10 @@ const Login: React.FC = () => {
           <View className="justify-center items-center flex" 
               style={styles.botao}>
             <Button
-              text="Entrar"
+              text={carregandoLogin ? "Enviando..." : "Continuar"} // Alteração dinâmica do texto
               colorBotao="bg-rosa-4"
               colorTexto="text-branco-total"
-              onPress={handleSubmit}
+              onPress={() => handleSubmit()}
               fonteTexto="font-PoppinsSemiBold"
             />
           </View>

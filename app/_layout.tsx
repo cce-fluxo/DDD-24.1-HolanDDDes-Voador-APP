@@ -32,7 +32,6 @@ export default function RootLayout() {
     return null;
   }
 
-  return <Stack />;
   return (
   <GestureHandlerRootView style={{ flex: 1 }}>
     <Stack />

@@ -22,9 +22,11 @@ const validationSchema = Yup.object().shape({
 const Cadastro3: React.FC = () => {
   const [senhaVisible, setSenhaVisible] = useState(false);
   const [confirmarSenhaVisible, setConfirmarSenhaVisible] = useState(false);
-  
+  const [loading, setLoading] = useState(false); // Estado para controlar o carregamento
+
   // Função para enviar os dados pro back
   const saveData = async (values: { senha: string; }) => {
+    setLoading(true)
     try {
       const formData = {
         hash_senha: values.senha
@@ -71,6 +73,8 @@ const Cadastro3: React.FC = () => {
 
     } catch (error) {
         console.error('Erro ao salvar ou enviar dados:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -211,11 +215,11 @@ const Cadastro3: React.FC = () => {
           <View className="justify-center items-center flex" 
               style={styles.botao}>
             <Button
-              text="Continuar"
+              text={loading ? "Enviando..." : "Continuar"} // Alteração dinâmica do texto
               colorBotao="bg-rosa-4"
               colorTexto="text-branco-total"
               onPress={() => handleSubmit()}
-              fonteTexto="font-poppins"
+              fonteTexto="font-PoppinsSemiBold"
             />
           </View>
         </>

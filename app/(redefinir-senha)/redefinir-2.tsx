@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Text, TextInput, Pressable, KeyboardAvoidingView, Platform } from 'react-native';
 import { Svg, Defs, LinearGradient, Image, Stop, Path } from 'react-native-svg';
 import * as Yup from "yup";
@@ -6,20 +6,86 @@ import { Formik } from "formik";
 import { Dimensions } from 'react-native';
 import Button from '@/components/botao';
 import { ScrollView } from 'react-native-gesture-handler';
+import { router } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import api from '@/services/axios';
 
 const { width } = Dimensions.get('window');
 
 const validationSchema = Yup.object().shape({
-  codigo: Yup.string()
+  token: Yup.string()
     .required("Campo obrigatorio"),
-    // adicionar validação de envio do código!!!
 });
 
 const Redefinir2: React.FC = () => {
-  const handlePress = () => {
-    // reenviar email --> rota no axios
-  };
 
+  const [email, setEmail] = useState<string | null>(null);
+
+  const [isPostBom, setIsPostBom] = useState(false);
+  const [loading, setLoading] = useState(true); 
+
+  useEffect(() => {
+    const fetchEmail = async () => {
+      try {
+        const storedEmail = await AsyncStorage.getItem("@USERemail");
+        if (storedEmail) {
+          setEmail(storedEmail); // Se o email for encontrado, armazena no estado
+        } else {
+          console.error("Email não encontrado. Redirecionando...");
+          router.push("/(auth)/login"); // Redireciona caso não encontre o email
+        }
+      } catch (error) {
+        console.error("Erro ao buscar o email", error);
+      } finally {
+        setLoading(false); // Marca o carregamento como concluído
+      }
+    };
+
+    fetchEmail();
+  }, [router]);
+
+  const handlePress = async () => {
+    if (!email) {
+      console.error("Email não encontrado.");
+      return; // Certifique-se de que o email foi encontrado antes de enviar a requisição
+    }
+
+    try {
+      const response = await api.patch("auth/recuperar-senha", { email });
+      console.log("Email de recuperação enviado com sucesso!", response.data);
+    } catch (error) {
+      console.error("Erro ao enviar email de recuperação", error);
+    }
+  };  
+
+  // POST
+  async function postValidarToken(data: any) {
+    try {
+      const response = await api.post("auth/recuperar-senha/validar-token", data);
+      console.log("Token enviado com sucesso!", response.data);
+      setIsPostBom(true);
+      router.push("/redefinir-3"); // Redireciona para a próxima etapa após sucesso
+      return response.data;
+    } catch (error) {
+      console.error("Erro ao enviar token", error);
+      setIsPostBom(false);
+    } finally {
+      console.log("Token validado com sucesso!");
+    }
+  }
+
+  const sendForm = async (values: { token: string }) => {
+    if (!email) {
+      console.error("Email não encontrado!");
+      return;
+    }
+    AsyncStorage.setItem("token", values.token);
+    const data = {
+      email,
+      token: values.token,
+    };
+    await postValidarToken(data);
+  };
 
   return (
     <KeyboardAvoidingView
@@ -80,9 +146,9 @@ const Redefinir2: React.FC = () => {
     <View className="px-6 py-4 w-full justify-center items-center">
   
     <Formik
-      initialValues={{ codigo: ''}}
+      initialValues={{ token: ''}}
       onSubmit={(values) => {
-        console.log(values);
+        sendForm(values)
       }}
       validationSchema={validationSchema}
     >
@@ -97,24 +163,24 @@ const Redefinir2: React.FC = () => {
 
             <TextInput
               placeholder="Código"
-              onChangeText={handleChange('codigo')}
-              onBlur={handleBlur('codigo')}
-              value={values.codigo}
+              onChangeText={handleChange('token')}
+              onBlur={handleBlur('token')}
+              value={values.token}
               style={styles.textInput}
             />
           </View>
-          {touched.codigo && errors.codigo && (
-            <Text style={styles.error}>{errors.codigo}</Text>
+          {touched.token && errors.token && (
+            <Text style={styles.error}>{errors.token}</Text>
           )}
           
           {/* Botão */}
           <View className="justify-center items-center flex" 
               style={styles.botao}>
             <Button
-              text="Continuar"
+              text={loading ? "Enviando..." : "Continuar"} // Alteração dinâmica do texto
               colorBotao="bg-rosa-4"
               colorTexto="text-branco-total"
-              onPress={handleSubmit}
+              onPress={() => handleSubmit()}
               fonteTexto="font-PoppinsSemiBold"
             />
           </View>

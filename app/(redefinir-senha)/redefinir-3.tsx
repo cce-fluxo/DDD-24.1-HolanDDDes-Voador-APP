@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { Svg, Defs, LinearGradient, Image, Stop, Path } from 'react-native-svg';
 import * as Yup from "yup";
 import { Formik } from "formik";
 import { Dimensions } from 'react-native';
 import Button from '@/components/botao';
+import { router } from 'expo-router';
+import api from '@/services/axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { width } = Dimensions.get('window');
 
@@ -18,6 +21,52 @@ const validationSchema = Yup.object().shape({
 const Redefinir3: React.FC = () => {
   const [senhaVisible, setSenhaVisible] = useState(false);
   const [confirmarSenhaVisible, setConfirmarSenhaVisible] = useState(false);
+
+  const [token, setToken] = useState<string | null>(null);
+
+  const [isPostBom, setIsPostBom] = useState(false);
+
+  useEffect(() => {
+    const fetchToken = async () => {
+      try {
+        const storedToken = await AsyncStorage.getItem("token");
+        if (storedToken) {
+          setToken(storedToken); // Recupera o token salvo no localStorage
+        } else {
+          console.error("Token não encontrado. Redirecionando...");
+          router.push("/(auth)/login"); // Redireciona para a página inicial ou de login se o token não estiver disponível
+        }
+      } catch (error) {
+        console.error('Erro ao buscar o email', error);
+      } finally {
+        setLoading(false);
+      }
+  } 
+    fetchToken();
+  }, [router]);
+
+  const [loading, setLoading] = useState(false); // Estado para controlar o carregamento
+
+  const alterarSenha = async (values: {
+    senha: string;
+    confirmarSenha: string;
+  }) => {
+    setLoading(true); // Marca como "enviando" quando começa a requisição
+    try {
+      const response = await api.patch(`auth/recuperar-senha/validar-token/${token}`, {
+        hash_senha: values.senha,
+      });
+
+      console.log("Senha alterada com sucesso.", response.data);
+      setIsPostBom(true);
+      router.push("/(auth)/login");
+      return response.data;
+    } catch (error) {
+      console.error("Erro ao alterar senha:", error);
+    } finally {
+      setLoading(false); // Retorna ao estado normal depois que a requisição for concluída
+    }
+  };
   
   return (
     <KeyboardAvoidingView
@@ -80,7 +129,7 @@ const Redefinir3: React.FC = () => {
     <Formik
       initialValues={{ senha: '', confirmarSenha: ''}}
       onSubmit={(values) => {
-        console.log(values);
+        alterarSenha(values)
       }}
       validationSchema={validationSchema}
     >
@@ -156,10 +205,10 @@ const Redefinir3: React.FC = () => {
           <View className="justify-center items-center flex" 
               style={styles.botao}>
             <Button
-              text="Continuar"
+              text={loading ? "Enviando..." : "Continuar"} // Alteração dinâmica do texto
               colorBotao="bg-rosa-4"
               colorTexto="text-branco-total"
-              onPress={handleSubmit}
+              onPress={() => handleSubmit()}
               fonteTexto="font-PoppinsSemiBold"
             />
           </View>
