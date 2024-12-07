@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, StyleSheet, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, Modal } from 'react-native';
 import { Svg, Defs, LinearGradient, Image, Stop, Path } from 'react-native-svg';
 import * as Yup from "yup";
 import { Formik } from "formik";
@@ -9,6 +9,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '@/services/axios';
 import { router } from 'expo-router';
+import { ModalCadastro } from '@/components/modalCadastro';
 
 const { width } = Dimensions.get('window');
 
@@ -23,6 +24,12 @@ const Cadastro3: React.FC = () => {
   const [senhaVisible, setSenhaVisible] = useState(false);
   const [confirmarSenhaVisible, setConfirmarSenhaVisible] = useState(false);
   const [loading, setLoading] = useState(false); // Estado para controlar o carregamento
+
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setModalVisible(!modalVisible);
+  };
 
   // Função para enviar os dados pro back
   const saveData = async (values: { senha: string; }) => {
@@ -65,7 +72,7 @@ const Cadastro3: React.FC = () => {
       if (response.status >= 200 && response.status < 300) {
         const responseData = await response.data;
         console.log('Dados enviados para a API com sucesso:', responseData);
-        router.push('/(auth)/login');
+        setModalVisible(true);
       } else {
         console.error('Erro ao enviar dados para a API:', response.statusText);
         console.error('Detalhes do erro:', response.data); // Aqui você pode verificar a resposta do erro, se houver.
@@ -232,6 +239,7 @@ const Cadastro3: React.FC = () => {
 
   </View>
   </ScrollView>
+  <ModalCadastro modalVisible={modalVisible} onClose={toggleModal} />
   </KeyboardAvoidingView>
   );
 };

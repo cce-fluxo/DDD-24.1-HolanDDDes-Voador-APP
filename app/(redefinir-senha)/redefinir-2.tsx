@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text, TextInput, Pressable, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, StyleSheet, Text, TextInput, Pressable, KeyboardAvoidingView, Platform, Modal } from 'react-native';
 import { Svg, Defs, LinearGradient, Image, Stop, Path } from 'react-native-svg';
 import * as Yup from "yup";
 import { Formik } from "formik";
@@ -9,6 +9,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '@/services/axios';
+import { CustomModal } from '@/components/modalCodigo';
 
 const { width } = Dimensions.get('window');
 
@@ -44,6 +45,12 @@ const Redefinir2: React.FC = () => {
     fetchEmail();
   }, [router]);
 
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setModalVisible(!modalVisible);
+  };
+
   const handlePress = async () => {
     if (!email) {
       console.error("Email não encontrado.");
@@ -53,6 +60,7 @@ const Redefinir2: React.FC = () => {
     try {
       const response = await api.patch("auth/recuperar-senha", { email });
       console.log("Email de recuperação enviado com sucesso!", response.data);
+      setModalVisible(true); // abre o modal
     } catch (error) {
       console.error("Erro ao enviar email de recuperação", error);
     }
@@ -196,6 +204,8 @@ const Redefinir2: React.FC = () => {
     >
       <Text className={`font-PoppinsSemiBold text-base justify-center text-center text-laranja`}>Reenviar código</Text>
     </Pressable>
+
+    <CustomModal modalVisible={modalVisible} onClose={toggleModal} />
   </View> 
 
 
