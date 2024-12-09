@@ -13,6 +13,7 @@ const { width } = Dimensions.get('window');
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
+    .transform((value) => (value ? value.toLowerCase() : value)) 
     .email("Email invalido")
     .required("Campo obrigatorio"),
   telefone: Yup.string().required("Campo obrigatorio").matches(
