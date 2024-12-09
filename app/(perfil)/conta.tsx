@@ -17,7 +17,7 @@ export default function Conta(){
                 <BotaoAvaliacao text="Meus cupons" onPress={() => { console.log("clicado")}}/>
                 <BotaoAvaliacao text="Favoritos" onPress={() => { console.log("clicado")}}/>
                 <BotaoAvaliacao text="Minhas Avaliações" onPress={() => { console.log("clicado")}}/>
-                <BotaoAvaliacao text="Cartões Salvos" onPress={() => { console.log("clicado")}}/>
+                <BotaoAvaliacao text="Cartões Salvos" onPress={() => { router.push('/(perfil)/cartoes') }}/>
                 <BotaoAvaliacao text="Perguntas Frequentes" onPress={() => {router.push('/(perfil)/FAQ')}}/>
             </View>
             
