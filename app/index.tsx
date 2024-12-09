@@ -42,6 +42,9 @@ export default function Index() {
         href={"/(notificacao)/notificacao"}
       >
         notificacoes
+        href={"/(perfil)/conta"}
+      >
+        conta
       </Link>
     </View>
   );
