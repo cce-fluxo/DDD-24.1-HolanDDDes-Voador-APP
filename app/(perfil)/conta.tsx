@@ -1,22 +1,24 @@
-import { View, Text, Dimensions } from "react-native";
-import { Image } from 'react-native-svg';
-
-const { width } = Dimensions.get('window');
+import BotaoAvaliacao from "@/components/botaoPerfil";
+import { View, Text } from "react-native";
+import { Image } from 'react-native';
 
 export default function Conta(){
     return(
-        <View className="bg-black w-screen h-screen">
-            <View className="bg-cyan-800 flex-row gap-6 w-auto h-auto">
-                {/* <View className="">
-                    <Image  href={require('./../../assets/images/google.png')} width={89} height={89} x={40} y={40}></Image>
-                </View> */}
-                <View className="w-[89px] h-[89px] bg-slate-600"></View>
-                <Text className="bg-slate-300 self-center">Nome do Usuário</Text>
+        <View className="bg-white w-screen h-screen flex content-center gap-[60px] pt-10">
+            <View className="flex-row gap-6 justify-center">
+                <Image  source={require('./../../assets/images/google.png')} width={89} height={89} className="rounded-full"/>
+                <Text className="self-center text-[#333333] font-medium text-xl">Nome do Usuário</Text>
             </View>
 
-            <View>
-                <Text>teste</Text>
+            <View className="flex items-center gap-[22px]">
+                <BotaoAvaliacao text="Meus dados" onPress={() => { console.log("clicado")}}/>
+                <BotaoAvaliacao text="Meus cupons" onPress={() => { console.log("clicado")}}/>
+                <BotaoAvaliacao text="Favoritos" onPress={() => { console.log("clicado")}}/>
+                <BotaoAvaliacao text="Minhas Avaliações" onPress={() => { console.log("clicado")}}/>
+                <BotaoAvaliacao text="Cartões Salvos" onPress={() => { console.log("clicado")}}/>
+                <BotaoAvaliacao text="Perguntas Frequentes" onPress={() => { console.log("clicado")}}/>
             </View>
+            
         </View>
     );
 }
