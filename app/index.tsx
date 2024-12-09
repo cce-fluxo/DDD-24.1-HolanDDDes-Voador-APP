@@ -39,6 +39,9 @@ export default function Index() {
       </Link>
       <Link
         className="text-2xl text-blue-700"
+        href={"/(notificacao)/notificacao"}
+      >
+        notificacoes
         href={"/(perfil)/conta"}
       >
         conta
