@@ -51,9 +51,13 @@ export default function Index() {
       >
         notificacoes
       </Link>
+<<<<<<< HEAD
 
       <Link
         className="text-2xl text-blue-700"
+=======
+      <Link
+>>>>>>> a43380863523f62c1b6390b7df4da72746e2284b
         href={"/(perfil)/conta"}
       >
         conta
