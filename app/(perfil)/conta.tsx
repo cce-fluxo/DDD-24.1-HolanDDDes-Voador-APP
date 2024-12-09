@@ -13,7 +13,7 @@ export default function Conta(){
             </View>
 
             <View className="flex items-center gap-[22px]">
-                <BotaoAvaliacao text="Meus dados" onPress={() => {router.push('/(perfil)/Meus-Dados')}}/>
+                <BotaoAvaliacao text="Meus dados" onPress={() => {router.push('/(perfil)/meus-dados')}}/>
                 <BotaoAvaliacao text="Meus cupons" onPress={() => { console.log("clicado")}}/>
                 <BotaoAvaliacao text="Favoritos" onPress={() => { console.log("clicado")}}/>
                 <BotaoAvaliacao text="Minhas Avaliações" onPress={() => { console.log("clicado")}}/>

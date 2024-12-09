@@ -41,7 +41,7 @@ export default function Conta(){
               text={"Editar"} // Alteração dinâmica do texto
               colorBotao="bg-rosa-4"
               colorTexto="text-branco-total"
-              onPress={() => router.push("/(perfil)/conta")}
+              onPress={() => router.push("/(perfil)/editar-dados")}
               fonteTexto="font-PoppinsSemiBold"
             />
             
