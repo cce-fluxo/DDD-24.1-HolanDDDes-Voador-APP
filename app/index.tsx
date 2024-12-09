@@ -37,6 +37,12 @@ export default function Index() {
       >
         redefinir3
       </Link>
+      <Link
+        className="text-2xl text-blue-700"
+        href={"/(notificacao)/notificacao"}
+      >
+        notificacoes
+      </Link>
     </View>
   );
 }

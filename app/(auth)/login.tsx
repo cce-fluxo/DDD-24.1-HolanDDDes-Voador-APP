@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Text, TextInput, TouchableOpacity, Pressable, Alert, Platform, KeyboardAvoidingView, ScrollView, Keyboard } from 'react-native';
 import { Svg, Defs, LinearGradient, Image, Stop, Path, Rect, ClipPath, G } from 'react-native-svg';
 import * as Yup from "yup";
@@ -8,6 +8,7 @@ import Button from '@/components/botao';
 import { Link, useRouter } from 'expo-router';
 import { useAuth } from "@/context/authContext";
 import api from '@/services/axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { width } = Dimensions.get('window');
 
@@ -21,26 +22,64 @@ const validationSchema = Yup.object().shape({
 const Login: React.FC = () => {
   const [isChecked, setIsChecked] = useState(false);
   const [carregandoLogin, setCarregandoLogin] = useState(false);
-  const { signIn, token, saveUserInfo } = useAuth();
+  const { signIn, token, saveUserInfo, user } = useAuth();
 
   async function logar(data: any) {
     setCarregandoLogin(true);
     try {
-      // requisição do login
-      const response = await api.post('auth/login', data)
-      console.log(response.data);
-      await signIn(response.data.access_token);
-      setCarregandoLogin(false);
-      console.log(token);
-      router.push('/(auth)/cadastro-1')
-
-      // salvando as informações do usuário
+      // Requisição do login
+      const response = await api.post("auth/login", data);
+      console.log("Resposta do login:", response.data);
+      
+      const { access_token, user } = response.data;
+      
+      // Salvando as informações do usuário antes de redirecionar
       await saveUserInfo(response.data.user);
+  
+      console.log('Token enviado: ', access_token);
+  
+      // Chamando a função de signIn para salvar o token
+      await signIn(access_token);
+      console.log('Login realizado com sucesso!!!');
+  
+      // Salvando as informações do usuário no contexto global
+      await saveUserInfo(user);
+
+      // após logar
+      const email = await AsyncStorage.getItem('@userEmail');
+      const nome = await AsyncStorage.getItem('@userNome');
+      const userID = await AsyncStorage.getItem('@userID');
+
+      console.log('Dados salvos no AsyncStorage: ', { email, nome, userID });
+
+      // Redirecionando o usuário
+      setCarregandoLogin(false);
+      router.push("/(notificacao)/notificacao");
     } catch (error) {
       setCarregandoLogin(false);
-      console.log("Erro ao realizar login: ", error);
+      console.error("Erro ao realizar login:", error);
     }
-  };
+  }  
+  
+  // Carrega o estado do checkbox ao iniciar o app
+  useEffect(() => {
+    const loadRememberMe = async () => {
+      const storedState = await AsyncStorage.getItem("@RememberMe");
+      if (storedState) {
+        setIsChecked(JSON.parse(storedState));
+      }
+    };
+    loadRememberMe();
+  }, []);
+
+
+  // Atualiza o AsyncStorage toda vez que o estado do checkbox mudar
+  useEffect(() => {
+    const saveRememberMe = async () => {
+      await AsyncStorage.setItem("@RememberMe", JSON.stringify(isChecked));
+    };
+    saveRememberMe();
+  }, [isChecked]);
 
   const router = useRouter();
 
