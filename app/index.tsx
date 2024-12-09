@@ -42,6 +42,8 @@ export default function Index() {
         href={"/(notificacao)/notificacao"}
       >
         notificacoes
+      </Link>
+      <Link
         href={"/(perfil)/conta"}
       >
         conta
