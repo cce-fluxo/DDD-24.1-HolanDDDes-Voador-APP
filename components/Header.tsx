@@ -1,10 +1,18 @@
-import { View, Text } from "react-native";
-import React from "react";
+import { View, Text, Image, Pressable } from "react-native";
+import { useRouter } from "expo-router";
 
-export default function Header() {
+interface HeaderProps {
+  headerText: string;
+}
+
+export default function Header({ headerText }: HeaderProps) {
+  const router = useRouter();
   return (
     <View>
-      <Text>Header</Text>
+      <Pressable onPress={() => router.back()}>
+        <Image source={require("./assets/images/arrow_back_ios.png")} />
+      </Pressable>
+      <Text>{headerText}</Text>
     </View>
   );
 }

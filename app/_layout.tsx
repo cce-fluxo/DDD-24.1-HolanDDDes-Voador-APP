@@ -32,12 +32,12 @@ export default function RootLayout() {
   if (!loaded && !error) {
     return null;
   }
-  
 
   return (
-  <GestureHandlerRootView style={{ flex: 1 }}>
-    <AuthContextProvider>
-      <Stack/>
-    </AuthContextProvider>
-  </GestureHandlerRootView>);
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <AuthContextProvider>
+        <Stack />
+      </AuthContextProvider>
+    </GestureHandlerRootView>
+  );
 }

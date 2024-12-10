@@ -1,9 +1,9 @@
 import { View, Text } from "react-native";
 
-export default function PagamentoCartao() {
+export default function AdicionarCartao() {
   return (
     <View>
-      <Text>PagamentoCartao</Text>
+      <Text>AdicionarCartao</Text>
     </View>
   );
 }

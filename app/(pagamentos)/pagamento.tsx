@@ -30,7 +30,7 @@ export default function Pagamento() {
         />
         <BotaoPagamento
           texto="Cartão de crédito/débito"
-          onPress={() => router.push("/(pagamentos)/pagamento-cartao")}
+          onPress={() => router.push("/(pagamentos)/confirmar-pag-credito")}
         />
       </View>
     </View>
