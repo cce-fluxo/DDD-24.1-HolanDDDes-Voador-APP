@@ -9,6 +9,7 @@ module.exports = {
         "rosa-2": "#F45065",
         "rosa-3": "#F42C46",
         "rosa-4": "#DC143B",
+        "rosa-5": "rgba(255, 20, 59, 0.29)",
         "verde-1": "#219653",
         preto: "#333333",
         branco: "#FBFBFB",
