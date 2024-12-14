@@ -25,6 +25,7 @@ module.exports = {
         "cinza-6": "#F2F2F2",
         laranja: "#FF6F45",
         "laranja-1": "#FD765E",
+        "gray-2": "#4F4F4F",
       },
       fontFamily: {
         PoppinsBold: ["Poppins-Bold", "sans-serif"],

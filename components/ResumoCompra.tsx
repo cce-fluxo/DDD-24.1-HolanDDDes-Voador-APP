@@ -2,8 +2,8 @@ import { View, Text } from "react-native";
 
 export default function ResumoCompra() {
   return (
-    <View className="flex bg-slate-500">
-      <View>
+    <View className="flex w-11/12">
+      <View className="flex gap-2">
         <Text className="text-2xl text-center text-preto font-PoppinsMedium">
           Resumo da compra
         </Text>
@@ -11,17 +11,20 @@ export default function ResumoCompra() {
           Plano clube: <Text className="text-verde-1">30 dias grátis</Text>,
           depois pague R$ 55,00/mês
         </Text>
-        <Text className="text-3xl text-center text-preto font-PoppinsMedium">
-          R$ 55,00
-        </Text>
-        <Text className="text-xl text-preto">Detalhes dos benefícios</Text>
       </View>
 
-      <View>
-        <Text className="text-sm font-PoppinsRegular text-cinza-2">
+      <Text className="text-3xl text-center text-preto font-PoppinsMedium flex my-6">
+        R$ 55,00
+      </Text>
+
+      <View className="flex gap-6">
+        <Text className="text-xl text-preto font-PoppinsMedium">
+          Detalhes dos benefícios
+        </Text>
+        <Text className="text-sm font-PoppinsRegular text-gray-2 border-b border-b-branco-3">
           Cupons de descontos de até 30% para usar em todos os hotéis
         </Text>
-        <Text className="text-sm text-cinza-2 font-PoppinsRegular">
+        <Text className="text-sm text-gray-2 font-PoppinsRegular border-b border-b-branco-3">
           Fidelidade para suas próximas estadias
         </Text>
       </View>
