@@ -63,7 +63,7 @@ export default function Conta(){
 
                 <View className="gap-[16px]">
                     <Button
-                    text={"Editar"} // Alteração dinâmica do texto
+                    text={"Salvar"} 
                     colorBotao="bg-rosa-4"
                     colorTexto="text-branco-total"
                     onPress={() => router.push("/(perfil)/conta")}
@@ -71,10 +71,10 @@ export default function Conta(){
                     />
 
                     <Button
-                    text={"Cancelar"} // Alteração dinâmica do texto
+                    text={"Cancelar"} 
                     colorBotao="border-[#DC143B] border-[1px]"
                     colorTexto="text-[#DC143B]"
-                    onPress={() => router.push("/(perfil)/meus-dados")}
+                    onPress={() => router.back()}
                     fonteTexto="font-PoppinsSemiBold"
                     />
                 </View>

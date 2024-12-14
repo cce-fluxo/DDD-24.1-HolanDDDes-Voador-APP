@@ -53,7 +53,7 @@ export default function Cartoes() {
             }}
           />
 
-          <AddCard onDelete={() => {console.log("Adicionando cartao");}}/>
+          <AddCard/>
         </ScrollView>
 
         <Titulo titulo="Cartões de débito"/>
@@ -80,7 +80,7 @@ export default function Cartoes() {
             }}
           />
 
-          <AddCard onDelete={() => {console.log("Adicionando cartao");}}/>
+          <AddCard/>
         </ScrollView>
       </View>
       
