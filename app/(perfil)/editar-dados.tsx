@@ -1,4 +1,5 @@
 import Button from "@/components/botao";
+import Header from "@/components/header";
 import { useRouter } from "expo-router";
 import { View, Text, TextInput, KeyboardAvoidingView, Platform } from "react-native";
 import { Image } from 'react-native';
@@ -21,6 +22,7 @@ export default function Conta(){
         <KeyboardAvoidingView
             style={{ flex: 1 }}
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+            <Header titulo="Perfil"/>
             <ScrollView
                 style={{ flex: 1, backgroundColor: "white" }}
                 contentContainerStyle={{

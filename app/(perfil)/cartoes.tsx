@@ -1,10 +1,12 @@
 import CardCartao from "@/components/cardCartao";
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { Svg, Path } from "react-native-svg";
+import Header from "@/components/header";
 
 export default function Cartoes() {
   return (
     <View className="">
+      <Header titulo="Cartões Salvos"/>
       <View className="flex-row gap-2 items-center">
         <Text className="text-preto text-base font-medium ">
           Cartão de Crédito
