@@ -11,12 +11,11 @@ export default function Cupons() {
         <View className="w-screen h-screen bg-white">
             <Header titulo="Meus Cupons"/>
             <View className="w-screen flex-row">
-
-                <TouchableOpacity  className={`w-1/2 flex pt-9 ${ativo? "border-b-2 border-[#DC143B]" : ""}`} onPress={ () => { setAtivo(true) }}>
+                <TouchableOpacity  className={`w-1/2 flex pt-9 pb-3 ${ativo? "border-b-2 border-[#DC143B]" : ""}`} onPress={ () => { setAtivo(true) }}>
                     <Text className={`text-base font-medium text-center ${ativo? "text-[#DC143B]" : "text-[#33333380]"}`}>Ativos</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity className={`w-1/2 flex pt-9 ${!ativo? "border-b-2 border-[#DC143B]" : ""}`} onPress={ () => { setAtivo(false) }}>
+                <TouchableOpacity className={`w-1/2 flex pt-9 pb-3 ${!ativo? "border-b-2 border-[#DC143B]" : ""}`} onPress={ () => { setAtivo(false) }}>
                     <Text className={`text-base font-medium text-center ${!ativo? "text-[#DC143B]" : "text-[#33333380]"}`}>Indisponíveis</Text>
                 </TouchableOpacity>
             </View>
