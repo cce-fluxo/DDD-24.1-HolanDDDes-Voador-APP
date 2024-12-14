@@ -8,6 +8,10 @@ export default function Index() {
         <Text className="font-ReadexProBold">pague o aluguel</Text>
       </Link>
 
+      <Link className="text-4xl text-rose-700" href={"/(tabs)/home"}>
+        <Text className="font-ReadexProBold">Home</Text>
+      </Link>
+
       <Link className="text-2xl text-blue-700" href={"/(auth)/cadastro-1"}>
         cadastro-1
       </Link>
@@ -52,17 +56,11 @@ export default function Index() {
         notificacoes
       </Link>
 
-      <Link
-        className="text-2xl text-blue-700"
-        href={"/(perfil)/conta"}
-      >
+      <Link className="text-2xl text-blue-700" href={"/(perfil)/conta"}>
         conta
       </Link>
 
-      <Link
-        className="text-2xl text-blue-700"
-        href={"/(perfil)/FAQ"}
-      >
+      <Link className="text-2xl text-blue-700" href={"/(perfil)/FAQ"}>
         FAQ
       </Link>
     </View>

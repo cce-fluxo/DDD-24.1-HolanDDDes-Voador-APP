@@ -5,6 +5,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        fundo: "#FFFFFF",
         "rosa-1": "#FFEDF0",
         "rosa-2": "#F45065",
         "rosa-3": "#F42C46",

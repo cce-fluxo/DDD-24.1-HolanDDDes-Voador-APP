@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import "../global.css";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import AuthContextProvider from "@/context/authContext";
+import { Image } from "react-native";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -36,7 +37,25 @@ export default function RootLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <AuthContextProvider>
-        <Stack />
+        <Stack
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: "#fff",
+            },
+            headerTitleStyle: {
+              fontWeight: "bold",
+              fontFamily: "Poppins",
+            },
+            headerTitle: (props) => (
+              <Image
+                className=""
+                source={{ uri: "@/assets/images/arrow-back.png" }}
+              />
+            ),
+          }}
+        >
+          <Stack.Screen name="Pagamentos" options={{}} />
+        </Stack>
       </AuthContextProvider>
     </GestureHandlerRootView>
   );
