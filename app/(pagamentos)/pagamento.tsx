@@ -38,7 +38,7 @@ export default function Pagamento() {
       <View className="flex w-11/12 gap-2">
         <BotaoPagamento
           texto="PIX"
-          onPress={() => router.push("/(pagamentos)/pagamento-pix")}
+          onPress={() => router.push("/(pagamentos)/confirmar-pag-pix")}
         >
           <Image
             source={require("@/assets/images/pix.png")}
@@ -48,7 +48,7 @@ export default function Pagamento() {
         </BotaoPagamento>
         <BotaoPagamento
           texto="Boleto"
-          onPress={() => router.push("/(pagamentos)/pagamento-boleto")}
+          onPress={() => router.push("/(pagamentos)/confirmar-pag-boleto")}
         >
           <Image
             source={require("@/assets/images/barcode.png")}
