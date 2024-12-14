@@ -57,7 +57,7 @@ export default function AdicionarCartao() {
                         text={"Salvar"} 
                         colorBotao="bg-rosa-4"
                         colorTexto="text-branco-total"
-                        onPress={() => router.push("/(perfil)/conta")}
+                        onPress={() => router.push("/(perfil)/cartoes")}
                         fonteTexto="font-PoppinsSemiBold"
                         />
 

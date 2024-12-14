@@ -17,7 +17,7 @@ export default function Conta(){
 
             <View className="flex items-center gap-[22px]">
                 <BotaoAvaliacao text="Meus dados" onPress={() => {router.push('/(perfil)/meus-dados')}}/>
-                <BotaoAvaliacao text="Meus cupons" onPress={() => { console.log("clicado")}}/>
+                <BotaoAvaliacao text="Meus cupons" onPress={() => { router.push('/(perfil)/cupons') }}/>
                 <BotaoAvaliacao text="Favoritos" onPress={() => { console.log("clicado")}}/>
                 <BotaoAvaliacao text="Minhas Avaliações" onPress={() => { console.log("clicado")}}/>
                 <BotaoAvaliacao text="Cartões Salvos" onPress={() => { router.push('/(perfil)/cartoes') }}/>

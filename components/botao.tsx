@@ -7,7 +7,7 @@ interface ButtonProps {
   colorBotao: string;
   colorTexto: string;
   onPress: () => void;
-  fonteTexto: string;
+  fonteTexto?: string;
 }
 
 export default function Button({ text, colorBotao, colorTexto, onPress, fonteTexto }: ButtonProps) {
