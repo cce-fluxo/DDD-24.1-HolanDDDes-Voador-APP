@@ -23,7 +23,7 @@ export default function CupomCard( {desconto, descricao }: CupomCardProps) {
                 <Text className="text-sm font-semibold text-preto">{desconto} de desconto para hoteis selecionados</Text>
             </View>
             <Text className="text-sm font-normal text-center text-[#00000080]">{descricao}</Text>
-            <Button text="Copiar Cupom" colorBotao="bg-[#DC143B]" colorTexto="text-white" onPress={ copiarCupom() }/>
+            <Button text="Copiar Cupom" colorBotao="bg-[#DC143B]" colorTexto="text-white" onPress={ () => {copiarCupom()} }/>
         </View>
     )
 }

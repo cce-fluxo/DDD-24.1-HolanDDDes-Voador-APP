@@ -1,14 +1,16 @@
+import { router } from "expo-router";
 import { View, Text, Image, TouchableOpacity} from "react-native";
 
 interface AvaliacaoProps {
     hotel: string;
     endereco: string;
     estrelas?: number;
+    onSelect?: () => void;
 } 
 
-export default function Avaliacao( { hotel, endereco, estrelas }: AvaliacaoProps) {
+export default function Avaliacao( { hotel, endereco, estrelas, onSelect = () => router.push("/(perfil)/avaliacao") }: AvaliacaoProps) {
     return (
-        <TouchableOpacity className="bg-white w-11/12 rounded-lg shadow-2xl p-4 flex-row justify-between items-center">
+        <TouchableOpacity onPress={() => { onSelect() }} className="bg-white w-11/12 rounded-lg shadow-2xl p-4 flex-row justify-between items-center">
             <View className="flex-row gap-4">
                 <View className="w-[73px] h-[73px] bg-slate-600"></View>
                 <View className="flex gap-2">
