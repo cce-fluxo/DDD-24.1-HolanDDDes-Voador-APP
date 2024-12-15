@@ -1,3 +1,4 @@
+import Comentario from "@/components/comentario";
 import Header from "@/components/header";
 import Score from "@/components/score";
 import { View, Text } from "react-native";
@@ -11,6 +12,7 @@ export default function Avaliacao(){
             <View className="w-11/12 h-[1px] bg-black"/>
             <View className="flex w-11/12">
                 <Text className="text-preto text-xl font-medium">Adicionar Comentário</Text>
+                <Comentario estilo="padrão"></Comentario>
             </View>
             
         </View>
