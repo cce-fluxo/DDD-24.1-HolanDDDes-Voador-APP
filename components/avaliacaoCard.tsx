@@ -1,5 +1,6 @@
 import { router } from "expo-router";
 import { View, Text, Image, TouchableOpacity} from "react-native";
+import Estrelas from "./estrelas";
 
 interface AvaliacaoProps {
     hotel: string;
@@ -15,13 +16,7 @@ export default function Avaliacao( { hotel, endereco, estrelas, onSelect = () =>
                 <View className="w-[73px] h-[73px] bg-slate-600"></View>
                 <View className="flex gap-2">
                     <Text>{hotel}</Text>
-                    <View className="flex-row gap-1">
-                        <Image  source={require('../assets/images/EstrelaVazia.png')} width={17} height={17}/>
-                        <Image  source={require('../assets/images/EstrelaVazia.png')} width={17} height={17}/>
-                        <Image  source={require('../assets/images/EstrelaVazia.png')} width={17} height={17}/>
-                        <Image  source={require('../assets/images/EstrelaVazia.png')} width={17} height={17}/>
-                        <Image  source={require('../assets/images/EstrelaVazia.png')} width={17} height={17}/>
-                    </View>
+                    <Estrelas/>
                     <View className="flex-row items-center gap-2">
                         <Image  source={require('../assets/images/location.png')} width={7} height={10}/>
                         <Text>{endereco}</Text>
