@@ -8,7 +8,7 @@ interface CardHotelProps{
     lugar: string
     preco: number
     nota: string
-    foto: string
+    foto?: string
     comodidades: [number,number,number,number,number]
 }
 
@@ -108,27 +108,55 @@ export default function CardHotel({nome="", lugar="", preco=0, nota="4,5", foto=
         }
     };
 
+    const handleNota = () => {
+        const nota_ = parseFloat(nota)
+        if(nota_ < 4 && nota_ >2){
+            return(
+                <View className=" mr-2 bg-yellow-400" style={{ flex: 0, height: 40, width: 48, borderRadius: 50, margin: 3, justifyContent: "center", alignItems: "center" }}>
+                        <Text style={{ color: "white", textAlign: "center" }}>{nota}</Text>
+                </View>
+            )
+        }
+
+        if(nota_ >= 4){
+            return(
+                <View className=" mr-2" style={{ flex: 0, height: 40, width: 48, backgroundColor: "green", borderRadius: 50, margin: 3, justifyContent: "center", alignItems: "center" }}>
+                        <Text style={{ color: "white", textAlign: "center" }}>{nota}</Text>
+                </View>
+            )
+        }
+
+        if(nota_ <= 2){
+            return(
+                <View className= "mr-2 bg-red-500" style={{ flex: 0, height: 40, width: 48, borderRadius: 50, margin: 3, justifyContent: "center", alignItems: "center" }}>
+                        <Text style={{ color: "white", textAlign: "center" }}>{nota}</Text>
+                </View>
+            )
+        }
+        
+    };
+
 
   return (
     
     <View className="flex-row w-5/6 h-[400px] rounded-3xl overflow-hidden bg-white shadow-lg" >
             <ImageBackground
-            source={foto} 
-            style={{ flex: 1, justifyContent: "center" }} 
+                source={require("../assets/images/slider_hotel.png")} 
+                style={{ flex: 1, justifyContent: "center" }} 
             >
             <View style={{ flex: 1, justifyContent: "space-between" }}> 
                 <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
                 <View>
                     <HeartButton />
                 </View>
-                <View style={{ flex: 0, height: 40, width: 48, backgroundColor: "green", borderRadius: 50, margin: 3, justifyContent: "center", alignItems: "center" }}>
-                    <Text style={{ color: "white", textAlign: "center" }}>{nota}</Text>
-                </View>
+
+                    {handleNota()}
+
                 </View>
             </View>
             </ImageBackground>
 
-        <View className=" relative flex-col h-full w-[50%] p-4">
+        <View className=" relative flex-col h-full w-[50%] p-4 ">
             <Text className=" font-bold text-2xl">
                 {nome}
             </Text>

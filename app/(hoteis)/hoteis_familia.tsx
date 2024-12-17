@@ -7,15 +7,16 @@ import api from "@/services/axios";
 import Svg, { Path } from "react-native-svg";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
-import Header from "@/components/header";
 import CardHotel from "@/components/cardHotel";
+
 
 const HoteisFamilia = () => {
     return (
         <ScrollView>
-            <View className=" mt-5 flex-col items-center gap-10">
-                <CardHotel nome="Pedro" lugar="Brasilia" preco={100} comodidades={[1,1,1,1,1]} />
-                <CardHotel nome="Palace" lugar="Sao Paulo" preco={700} />
+            <View className=" mt-5 flex-col items-center gap-10 ">
+                <CardHotel nome="Pousada das Flores" lugar="Rio de Janeiro" preco={250} nota="4,2" comodidades={[1,1,0,0,0]} />
+                <CardHotel nome="Palace" lugar="Sao Paulo" preco={200} nota="1,8" comodidades={[1,0,0,0,1]}/>
+                <CardHotel nome="Bom Sono" lugar="Rio de Janeiro" preco={500} nota="3,4" comodidades={[1,1,1,1,1]} />
             </View>
         </ScrollView>
     )
