@@ -1,5 +1,5 @@
 import { Tabs } from "expo-router";
-import { Image, View } from "react-native";
+import { Image } from "react-native";
 
 export default function TabLayout() {
   return (
@@ -8,9 +8,10 @@ export default function TabLayout() {
         tabBarShowLabel: false,
         tabBarStyle: {
           backgroundColor: "#333333",
-          height: 60,
           display: "flex",
+          height: 60,
           flexDirection: "row",
+          paddingTop: 10,
         },
       }}
     >
