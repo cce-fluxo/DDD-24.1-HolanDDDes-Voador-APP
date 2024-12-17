@@ -76,7 +76,7 @@ const Login: React.FC = () => {
 
       // Redirecionando o usuário
       setCarregandoLogin(false);
-      router.push("/(notificacao)/notificacao");
+      router.push("/(tabs)/notificacoes");
     } catch (error) {
       setCarregandoLogin(false);
       console.error("Erro ao realizar login:", error);
