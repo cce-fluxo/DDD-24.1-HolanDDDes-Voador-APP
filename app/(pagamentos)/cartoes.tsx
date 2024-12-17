@@ -24,7 +24,7 @@ function Titulo({ titulo }: TituloProps) {
 export default function Cartoes() {
   return (
     <View className="bg-white w-screen h-screen items-center">
-      <Header titulo="Cartões Salvos" className="w-full" />
+      <Header titulo="Cartões Salvos" />
 
       <View className="Flex gap-[16px] pt-6 w-11/12">
         <Titulo titulo="Cartões de crédito" />

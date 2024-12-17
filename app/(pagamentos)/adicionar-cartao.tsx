@@ -20,7 +20,7 @@ export default function AdicionarCartao() {
       <Pressable onPress={() => setModalVisible(!modalVisible)}>
         <Text className="text-3xl text-preto">Abrir modal</Text>
       </Pressable>
-      <Header titulo="Salvar Cartão" className="w-full" />
+      <Header titulo="Adicionar cartão" />
       <View className="w-11/12 flex">
         <View className="flex gap-8">
           <Text className="text-preto text-base font-PoppinsMedium">

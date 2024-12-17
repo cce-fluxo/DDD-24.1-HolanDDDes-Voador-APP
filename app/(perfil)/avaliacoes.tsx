@@ -5,7 +5,7 @@ import { ScrollView, View } from "react-native";
 export default function Avaliacoes() {
   return (
     <View className="bg-orange-50 w-screen h-screen">
-      <Header titulo="Avaliações" className="w-full" />
+      <Header titulo="Avaliações" />
       <ScrollView
         style={{ flex: 1 }}
         contentContainerStyle={{

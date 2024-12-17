@@ -1,11 +1,13 @@
 import BotaoPagamento from "@/components/BotaoPagamento";
 import ResumoCompra from "@/components/ResumoCompra";
+import Header from "@/components/header";
 import { router } from "expo-router";
 import { View, Image } from "react-native";
 
 export default function ConfirmarPagamentoPix() {
   return (
     <View className="flex-1 items-center justify-center bg-fundo gap-60">
+      <Header titulo="Confirmar compra" />
       <ResumoCompra />
 
       <View className="w-11/12">
