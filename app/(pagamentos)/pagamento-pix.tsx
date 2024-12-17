@@ -1,6 +1,7 @@
 import BotaoCopiarCodigo from "@/components/BotaoCopiarCodigo";
+import Header from "@/components/header";
 import { useState } from "react";
-import { View, Text, Image, Modal, Pressable } from "react-native";
+import { View, Text, Image, Modal, Pressable, StyleSheet } from "react-native";
 
 const handlePress = () => {
   return;
@@ -10,6 +11,7 @@ export default function PagamentoPix() {
   const [modalVisible, setModalVisible] = useState(false);
   return (
     <View className="flex items-center mx-6">
+      <Header titulo="Pagar com Pix" />
       <Pressable onPress={() => setModalVisible(!modalVisible)}>
         <Text className="text-3xl text-preto">Abrir modal</Text>
       </Pressable>
@@ -84,7 +86,10 @@ export default function PagamentoPix() {
         }}
       >
         <View className="flex-1 items-center justify-center">
-          <View className="w-4/5 bg-fundo rounded-3xl flex items-center justify-center gap-4 py-8">
+          <View
+            style={styles.modalStyles}
+            className="w-4/5 bg-fundo rounded-3xl flex items-center justify-center gap-4 py-8"
+          >
             <Image
               source={require("@/assets/images/model-confirmar.png")}
               className="w-[220px] h-[220px]"
@@ -112,3 +117,13 @@ export default function PagamentoPix() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  modalStyles: {
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+});
