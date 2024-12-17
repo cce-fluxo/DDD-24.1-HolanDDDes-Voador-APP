@@ -63,6 +63,10 @@ export default function Index() {
       <Link className="text-2xl text-blue-700" href={"/(perfil)/FAQ"}>
         FAQ
       </Link>
+
+      <Link className="text-2xl text-blue-700" href={"/(hoteis)/hoteis_familia"}>
+        hoteis
+      </Link>
     </View>
   );
 }
