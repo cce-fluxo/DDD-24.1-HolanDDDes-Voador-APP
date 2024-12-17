@@ -92,7 +92,7 @@ const Cadastro3: React.FC = () => {
 
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1 }}
+      style={{ flex: 1, backgroundColor: 'white'  }}
       behavior={Platform.OS === "ios" ? "padding" : undefined}
     >
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>

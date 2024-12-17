@@ -90,7 +90,7 @@ const NotificationsScreen = () => {
 
   
     return (
-        <View className="flex-1">
+        <View className="flex-1 bg-white">
             <Header titulo="Notificações"/>
     
 
