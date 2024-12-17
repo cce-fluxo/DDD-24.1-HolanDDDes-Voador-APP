@@ -1,5 +1,5 @@
 import { router } from "expo-router";
-import { TouchableOpacity, View, Text } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import Svg, { Path } from "react-native-svg";
 
 interface HeaderProps {
@@ -9,13 +9,12 @@ interface HeaderProps {
 
 export default function Header({ titulo, className = "" }: HeaderProps) {
   return (
-    <View
-      className={`flex-row items-center px-4 py-4 bg-transparent gap-4 w-full ${className}`}
-    >
-      <TouchableOpacity
+    <View className={`flex-row items-center gap-4 w-full ${className}`}>
+      <Pressable
         onPress={() => {
           router.back();
         }}
+        className="p-5"
       >
         <Svg width="12" height="20" viewBox="0 0 12 20" fill="none">
           <Path
@@ -23,7 +22,7 @@ export default function Header({ titulo, className = "" }: HeaderProps) {
             fill="#DC143B"
           />
         </Svg>
-      </TouchableOpacity>
+      </Pressable>
       <Text className="text-xl font-PoppinsMedium text-preto">{titulo}</Text>
     </View>
   );

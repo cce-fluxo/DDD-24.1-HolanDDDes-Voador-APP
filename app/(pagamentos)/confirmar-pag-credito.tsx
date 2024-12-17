@@ -6,21 +6,23 @@ import { View, Image } from "react-native";
 
 export default function ConfirmarPagamentoCredito() {
   return (
-    <View className="flex-1 items-center justify-center bg-fundo gap-60">
+    <View className="flex-1 bg-fundo">
       <Header titulo="Confirmar compra" />
-      <ResumoCompra />
+      <View className="flex items-center mt-40 gap-40">
+        <ResumoCompra />
 
-      <View className="w-11/12">
-        <BotaoPagamento
-          texto="Cartão de crédito/débito"
-          onPress={() => router.push("/(pagamentos)/adicionar-cartao")}
-        >
-          <Image
-            source={require("@/assets/images/mastercard.png")}
-            className="h-5 w-5"
-            resizeMode="contain"
-          />
-        </BotaoPagamento>
+        <View className="w-11/12">
+          <BotaoPagamento
+            texto="Cartão de crédito/débito"
+            onPress={() => router.push("/(pagamentos)/adicionar-cartao")}
+          >
+            <Image
+              source={require("@/assets/images/mastercard.png")}
+              className="h-5 w-5"
+              resizeMode="contain"
+            />
+          </BotaoPagamento>
+        </View>
       </View>
     </View>
   );
