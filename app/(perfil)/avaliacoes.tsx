@@ -1,5 +1,6 @@
 import Avaliacao from "@/components/avaliacaoCard";
 import Header from "@/components/header";
+import TabBar from "@/components/tabBar";
 import { ScrollView, View } from "react-native";
 
 export default function Avaliacoes() {
@@ -24,6 +25,7 @@ export default function Avaliacoes() {
         <Avaliacao hotel="Hotel Aquamarine" endereco="Arraial do cabo" />
         <Avaliacao hotel="Hotel Aquamarine" endereco="Arraial do cabo" />
       </ScrollView>
+      <TabBar></TabBar>
     </View>
   );
 }

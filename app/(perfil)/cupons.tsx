@@ -1,5 +1,6 @@
 import CuponsPage from "@/components/cuponsPage";
 import Header from "@/components/header";
+import TabBar from "@/components/tabBar";
 import { useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 
@@ -20,6 +21,7 @@ export default function Cupons() {
                 </TouchableOpacity>
             </View>
             <CuponsPage ativo={ativo}></CuponsPage>
+            <TabBar></TabBar>
         </View>
     )
 }

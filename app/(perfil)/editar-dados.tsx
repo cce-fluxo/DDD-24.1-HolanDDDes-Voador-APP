@@ -1,5 +1,6 @@
 import Button from "@/components/botao";
 import Header from "@/components/header";
+import TabBar from "@/components/tabBar";
 import { useRouter } from "expo-router";
 import { View, Text, TextInput, KeyboardAvoidingView, Platform } from "react-native";
 import { Image } from 'react-native';
@@ -80,6 +81,7 @@ export default function Conta(){
                 </View>
                
             </ScrollView>
+            <TabBar></TabBar>
         </KeyboardAvoidingView>
         
         

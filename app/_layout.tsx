@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import "../global.css";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import AuthContextProvider from "@/context/authContext";
+import TabBar from "@/components/tabBar";
 
 SplashScreen.preventAutoHideAsync();
 

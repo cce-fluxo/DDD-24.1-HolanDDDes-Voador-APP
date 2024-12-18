@@ -6,6 +6,7 @@ import api from "@/services/axios";
 import Svg, { Path } from "react-native-svg";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Header from "@/components/header";
+import TabBar from "@/components/tabBar";
 
 interface NotificationData {
   id: number;
@@ -119,7 +120,7 @@ const Notificacoes = () => {
             </ScrollView>
         </>
         )}
-
+        <TabBar></TabBar>
     </View>
   );
 };

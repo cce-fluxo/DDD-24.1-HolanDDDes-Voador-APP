@@ -3,6 +3,7 @@ import { View, Text, ScrollView } from "react-native";
 import { Svg, Path } from "react-native-svg";
 import Header from "@/components/header";
 import AddCard from "@/components/addCard";
+import TabBar from "@/components/tabBar";
 
 interface TituloProps {
   titulo: string;
@@ -83,6 +84,8 @@ export default function Cartoes() {
           <AddCard />
         </ScrollView>
       </View>
+
+      <TabBar></TabBar>
     </View>
   );
 }
