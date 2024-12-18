@@ -2,10 +2,12 @@ import BotaoPagamento from "@/components/BotaoPagamento";
 import ResumoCompra from "@/components/ResumoCompra";
 import { router } from "expo-router";
 import { View, Text, Image } from "react-native";
+import Header from "@/components/header";
 
 export default function Pagamento() {
   return (
     <View className="flex-1 items-center bg-fundo">
+      <Header titulo="" />
       <View className="flex items-center my-4">
         <Image
           source={require("@/assets/images/logo.png")}

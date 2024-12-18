@@ -1,4 +1,12 @@
-import { View, Text, Modal, Pressable, Image, TextInput } from "react-native";
+import {
+  View,
+  Text,
+  Modal,
+  Pressable,
+  Image,
+  TextInput,
+  StyleSheet,
+} from "react-native";
 import { useState } from "react";
 import { router } from "expo-router";
 import Svg, { Path } from "react-native-svg";
@@ -12,7 +20,7 @@ export default function AdicionarCartao() {
       <Pressable onPress={() => setModalVisible(!modalVisible)}>
         <Text className="text-3xl text-preto">Abrir modal</Text>
       </Pressable>
-      <Header titulo="Salvar Cartão" className="w-full" />
+      <Header titulo="Adicionar cartão" />
       <View className="w-11/12 flex">
         <View className="flex gap-8">
           <Text className="text-preto text-base font-PoppinsMedium">
@@ -104,18 +112,21 @@ export default function AdicionarCartao() {
         }}
       >
         <View className="flex-1 items-center justify-center">
-          <View className="w-4/5 bg-slate-200 rounded-3xl flex items-center justify-center">
+          <View
+            style={styles.modalStyles}
+            className="w-4/5 bg-fundo rounded-3xl flex items-center justify-center py-8 gap-8"
+          >
             <Image
               source={require("@/assets/images/modal-vip.png")}
-              className="w-4/5"
+              className="w-[221px] h-[221px]"
               resizeMode="contain"
             />
 
-            <View className="">
-              <Text className="font-PoppinsBold text-base text-preto">
+            <View>
+              <Text className="font-PoppinsBold text-base text-preto text-center">
                 Preste muita atenção
               </Text>
-              <Text className="font-PoppinsMedium text-sm text-preto">
+              <Text className="font-PoppinsMedium text-sm text-preto text-center">
                 Últimos dias!
               </Text>
             </View>
@@ -125,10 +136,10 @@ export default function AdicionarCartao() {
               torne-se VIP
             </Text>
 
-            <View className="flex flex-row w-4/5 gap-2">
+            <View className="flex-row gap-2">
               <Pressable
                 onPress={() => setModalVisible(!modalVisible)}
-                className="rounded-lg border border-rosa-4 h-10 flex justify-center"
+                className="rounded-lg border border-rosa-4 h-10 flex justify-center w-2/5"
               >
                 <Text className="font-PoppinsMedium text-sm text-rosa-4 text-center">
                   Rejeitar
@@ -137,7 +148,7 @@ export default function AdicionarCartao() {
 
               <Pressable
                 onPress={() => setModalVisible(!modalVisible)}
-                className="bg-rosa-4 rounded-lg h-10 flex justify-center"
+                className="bg-rosa-4 rounded-lg h-10 flex justify-center w-2/5"
               >
                 <Text className="font-PoppinsMedium text-sm text-white text-center">
                   Aceitar
@@ -150,3 +161,13 @@ export default function AdicionarCartao() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  modalStyles: {
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+});

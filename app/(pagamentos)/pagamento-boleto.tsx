@@ -1,6 +1,7 @@
 import { View, Text } from "react-native";
 import BotaoCopiarCodigo from "@/components/BotaoCopiarCodigo";
 import Button from "@/components/botao";
+import Header from "@/components/header";
 
 const handlePressCopiarCodigo = () => {
   return;
@@ -13,6 +14,7 @@ const handlePressBaixarBoleto = () => {
 export default function PagamentoBoleto() {
   return (
     <View className="flex gap-8 items-center">
+      <Header titulo="Confirmar compra" />
       <View className="flex gap-4 mx-10 mt-4">
         <Text className="font-PoppinsMedium text-preto text-sm text-center">
           Você tem 3 dias para pagar. O pagamento é aprovado em 1 ou 2 dias
